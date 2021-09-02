@@ -22,16 +22,32 @@ const initialFormValues = {
 const TodoForm = () => {
   const [newTask, setNewTask] = useState(initialFormValues);
 
+  const handleChange = (e) => {
+    setNewTask({ ...newTask, [e.target.name]: e.target.value });
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     tasks.push(newTask);
     setNewTask(initialFormValues);
   };
 
+  const handleCancel = () => {
+    setNewTask(initialFormValues);
+  };
+
   return (
     <div>
-      <h2>Add Task</h2>
       <form onSubmit={handleSubmit}></form>
+      <label>Add Task</label>
+      <input
+        value={newTask.task}
+        onChange={handleChange}
+        name="task"
+        type="text"
+      />
+      <button type="submit">Submit</button>
+      <button onClick={handleCancel}>Cancel</button>
     </div>
   );
 };
