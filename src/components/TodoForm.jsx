@@ -1,25 +1,12 @@
 import React, { useState } from "react";
 
-const tasks = [
-  {
-    task: "Clean kitchen",
-    id: 1528817077286,
-    completed: false,
-  },
-  {
-    task: "Update resume",
-    id: 1528817084358,
-    completed: false,
-  },
-];
-
 const initialFormValues = {
   task: "",
   id: Date.now(),
   completed: false,
 };
 
-const TodoForm = () => {
+const TodoForm = ({ tasks }) => {
   const [newTask, setNewTask] = useState(initialFormValues);
 
   const handleChange = (e) => {
