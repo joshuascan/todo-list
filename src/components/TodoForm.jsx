@@ -21,7 +21,6 @@ const TodoForm = ({ tasks, addTask }) => {
   const handleCancel = (e) => {
     e.preventDefault();
     setNewTask(initialFormValues);
-    console.log(tasks);
   };
 
   return (
