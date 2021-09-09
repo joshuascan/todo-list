@@ -1,6 +1,9 @@
 import React, { useState } from "react";
-import TodoForm from "./components/TodoForm";
-import TodoList from "./components/TodoList";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import Navigation from "./components/Navigation";
+import TodoForm from "./components/tasks/TodoForm";
+import TodoList from "./components/tasks/TodoList";
+import ShoppingListCreator from "./components/shopping/ShoppingListCreator";
 
 const initialTasks = [
   {
@@ -17,18 +20,41 @@ const initialTasks = [
 
 function App() {
   const [tasks, setTasks] = useState(initialTasks);
+  const [shoppingLists, setShoppingLists] = useState([]);
 
   const addTask = (todo) => {
     const newTask = { ...todo, id: Date.now() };
     setTasks([...tasks, newTask]);
   };
 
+  const addShoppingList = (list) => {
+    const newList = {
+      name: list.name,
+      tags: list.tags.split(/[ ,]+/),
+      id: Date.now(),
+    };
+    setShoppingLists([...shoppingLists, newList]);
+  };
+
   return (
-    <div className="App">
-      <h1>Todo-List</h1>
-      <TodoForm tasks={tasks} addTask={addTask} />
-      <TodoList tasks={tasks} />
-    </div>
+    <Router>
+      <div className="App">
+        <h1>forgetful.</h1>
+        <Navigation />
+        <Switch>
+          <Route path="/tasks">
+            <TodoForm tasks={tasks} addTask={addTask} />
+            <TodoList tasks={tasks} />
+          </Route>
+          <Route path="/shopping">
+            <ShoppingListCreator
+              shoppingLists={shoppingLists}
+              addShoppingList={addShoppingList}
+            />
+          </Route>
+        </Switch>
+      </div>
+    </Router>
   );
 }
 
