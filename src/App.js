@@ -4,6 +4,7 @@ import Navigation from "./components/Navigation";
 import TodoForm from "./components/tasks/TodoForm";
 import TodoList from "./components/tasks/TodoList";
 import ShoppingListCreator from "./components/shopping/ShoppingListCreator";
+import ShoppingLists from "./components/shopping/ShoppingLists";
 
 const initialTasks = [
   {
@@ -51,6 +52,7 @@ function App() {
               shoppingLists={shoppingLists}
               addShoppingList={addShoppingList}
             />
+            <ShoppingLists shoppingLists={shoppingLists} />
           </Route>
         </Switch>
       </div>
