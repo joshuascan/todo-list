@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 
-const ShoppingCard = (props) => {
+const ShoppingCard = ({ list }) => {
   const [listItem, setListItem] = useState("");
   const [items, setItems] = useState([]);
-  const { list } = props;
 
   const handleChange = (e) => {
     setListItem(e.target.value);

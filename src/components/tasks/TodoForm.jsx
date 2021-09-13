@@ -5,7 +5,7 @@ const initialFormValues = {
   completed: false,
 };
 
-const TodoForm = ({ tasks, addTask }) => {
+const TodoForm = ({ addTask }) => {
   const [newTask, setNewTask] = useState(initialFormValues);
 
   const handleChange = (e) => {
@@ -14,7 +14,7 @@ const TodoForm = ({ tasks, addTask }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    addTask(newTask);
+    addTask({ ...newTask, id: Date.now() });
     setNewTask(initialFormValues);
   };
 
