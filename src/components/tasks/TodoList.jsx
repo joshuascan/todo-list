@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Task from "./Task";
+import Completed from "./Completed";
 import TodoForm from "./TodoForm";
 
 const initialTasks = [
@@ -17,6 +18,7 @@ const initialTasks = [
 
 const TodoList = () => {
   const [tasks, setTasks] = useState(initialTasks);
+  const [completedTasks, setCompletedTasks] = useState([]);
 
   const addTask = (newTask) => {
     setTasks([...tasks, newTask]);
@@ -37,12 +39,48 @@ const TodoList = () => {
     setTasks(newTasks);
   };
 
+  const markComplete = (todo) => {
+    setCompletedTasks([...completedTasks, todo]);
+    const newTasks = tasks.filter((task) => task.id !== todo.id);
+
+    setTasks(newTasks);
+  };
+
+  const markIncomplete = (todo) => {
+    setTasks([...tasks, todo]);
+    const newCompletedTasks = completedTasks.filter(
+      (task) => task.id !== todo.id
+    );
+
+    setCompletedTasks(newCompletedTasks);
+  };
+
+  console.log("tasks: ", tasks);
+  console.log("completed: ", completedTasks);
+
   return (
     <div>
       <TodoForm addTask={addTask} />
       <div>
-        {tasks.map((todo) => (
-          <Task key={todo.id} todo={todo} toggleComplete={toggleComplete} />
+        {tasks
+          .sort((a, b) => a.id - b.id)
+          .map((todo) => (
+            <Task
+              key={todo.id}
+              todo={todo}
+              toggleComplete={toggleComplete}
+              markComplete={markComplete}
+            />
+          ))}
+      </div>
+      <h2>Completed</h2>
+      <div>
+        {completedTasks.map((todo) => (
+          <Completed
+            key={todo.id}
+            todo={todo}
+            markIncomplete={markIncomplete}
+          />
         ))}
       </div>
     </div>
