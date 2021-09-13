@@ -22,12 +22,27 @@ const TodoList = () => {
     setTasks([...tasks, newTask]);
   };
 
+  const toggleComplete = (id) => {
+    const newTasks = tasks.map((task) => {
+      if (task.id === id) {
+        return {
+          ...task,
+          completed: !task.completed,
+        };
+      } else {
+        return task;
+      }
+    });
+
+    setTasks(newTasks);
+  };
+
   return (
     <div>
       <TodoForm addTask={addTask} />
       <div>
         {tasks.map((todo) => (
-          <Task key={todo.id} todo={todo} />
+          <Task key={todo.id} todo={todo} toggleComplete={toggleComplete} />
         ))}
       </div>
     </div>

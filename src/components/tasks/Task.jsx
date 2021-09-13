@@ -2,8 +2,9 @@ import React from "react";
 
 const Task = (props) => {
   const handleClick = () => {
-    props.todo.completed = !props.todo.completed;
+    props.toggleComplete(props.todo.id);
   };
+
   return (
     <div className={`task${props.todo.completed ? " completed" : ""}`}>
       <form>
