@@ -1,0 +1,22 @@
+/* * {
+  border: 1px solid black;
+} */
+
+.shopping-lists-container {
+  margin: 0 auto;
+  width: 70%;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.shopping-card-container {
+  border: 5px solid royalblue;
+}
+
+.shopping-list-tag {
+  font-size: 12px;
+  margin: 0 5px;
+  border: 2px solid black;
+  border-radius: 5px;
+  padding: 4px;
+}

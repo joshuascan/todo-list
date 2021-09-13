@@ -3,6 +3,7 @@ import React, { useState } from "react";
 const ShoppingCard = (props) => {
   const [listItem, setListItem] = useState("");
   const [items, setItems] = useState([]);
+  const { list } = props;
 
   const handleChange = (e) => {
     setListItem(e.target.value);
@@ -16,11 +17,17 @@ const ShoppingCard = (props) => {
 
   return (
     <div className={"shopping-card-container"}>
-      <h3>{props.list.name}</h3>
-      {props.list.tags.map((tag) => (
-        <p key={tag}>{tag}</p>
-      ))}
-      <div>
+      <h3>{list.name}</h3>
+      {list.tags.length > 0 ? (
+        list.tags.map((tag) => (
+          <span className={"shopping-list-tag"} key={tag}>
+            {tag}
+          </span>
+        ))
+      ) : (
+        <span></span>
+      )}
+      <div className={"shopping-list-items"}>
         {items.map((item) => (
           <p className={"list-item"} key={item.id}>
             {item.name}
