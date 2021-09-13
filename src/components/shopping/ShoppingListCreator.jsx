@@ -5,7 +5,7 @@ const initialFormValues = {
   tags: "",
 };
 
-const ShoppingListCreator = ({ shoppingLists, addShoppingList }) => {
+const ShoppingListCreator = ({ addShoppingList }) => {
   const [newList, setNewList] = useState(initialFormValues);
 
   const handleChange = (e) => {

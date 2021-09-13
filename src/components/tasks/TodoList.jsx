@@ -19,8 +19,6 @@ const TodoList = () => {
   const [tasks, setTasks] = useState(initialTasks);
 
   const addTask = (newTask) => {
-    // const newTask = { ...todo, id: Date.now() };
-    console.log(tasks);
     setTasks([...tasks, newTask]);
   };
 
