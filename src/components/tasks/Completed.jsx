@@ -3,7 +3,6 @@ import React from "react";
 const Completed = (props) => {
   const handleChange = () => {
     props.markIncomplete(props.todo);
-    console.log(props.todo);
   };
 
   return (

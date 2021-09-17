@@ -3,7 +3,6 @@ import React from "react";
 const Task = (props) => {
   const handleChange = () => {
     props.markComplete(props.todo);
-    console.log(props.todo);
   };
 
   return (

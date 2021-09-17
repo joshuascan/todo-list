@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Task from "./Task";
 import Completed from "./Completed";
 import TodoForm from "./TodoForm";
+import Archived from "./Archived";
 
 const initialTasks = [
   {
@@ -19,6 +20,7 @@ const initialTasks = [
 const TodoList = () => {
   const [tasks, setTasks] = useState(initialTasks);
   const [completedTasks, setCompletedTasks] = useState([]);
+  const [archived, setArchived] = useState([]);
 
   const addTask = (newTask) => {
     setTasks([...tasks, newTask]);
@@ -57,13 +59,16 @@ const TodoList = () => {
     setCompletedTasks(newCompletedTasks);
   };
 
-  console.log("tasks: ", tasks);
-  console.log("completed: ", completedTasks);
+  const archiveTask = () => {
+    setArchived(completedTasks);
+    setCompletedTasks([]);
+  };
 
   return (
     <div>
       <TodoForm addTask={addTask} />
       <div>
+        <h2>Tasks</h2>
         {tasks
           .sort((a, b) => a.id - b.id)
           .map((todo) => (
@@ -84,7 +89,14 @@ const TodoList = () => {
             markIncomplete={markIncomplete}
           />
         ))}
+        <button onClick={archiveTask}>Archive Completed</button>
       </div>
+      <Archived
+        archived={archived}
+        setArchived={setArchived}
+        setTasks={setTasks}
+        setCompletedTasks={setCompletedTasks}
+      />
     </div>
   );
 };
