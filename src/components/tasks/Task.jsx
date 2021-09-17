@@ -1,18 +1,15 @@
 import React from "react";
 
 const Task = (props) => {
-  const handleClick = () => {
-    props.toggleComplete(props.todo.id);
-  };
-
-  const complete = () => {
+  const handleChange = () => {
     props.markComplete(props.todo);
+    console.log(props.todo);
   };
 
   return (
     <div className={`task${props.todo.completed ? " completed" : ""}`}>
       <form>
-        <input type="checkbox" onClick={complete} />
+        <input type="checkbox" defaultChecked={false} onChange={handleChange} />
         <label>{props.todo.task}</label>
       </form>
     </div>

@@ -40,6 +40,7 @@ const TodoList = () => {
   };
 
   const markComplete = (todo) => {
+    todo.completed = true;
     setCompletedTasks([...completedTasks, todo]);
     const newTasks = tasks.filter((task) => task.id !== todo.id);
 
@@ -47,6 +48,7 @@ const TodoList = () => {
   };
 
   const markIncomplete = (todo) => {
+    todo.completed = false;
     setTasks([...tasks, todo]);
     const newCompletedTasks = completedTasks.filter(
       (task) => task.id !== todo.id
