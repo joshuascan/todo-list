@@ -96,7 +96,9 @@ const TodoList = () => {
       <Archive
         archived={archived}
         setArchived={setArchived}
+        tasks={tasks}
         setTasks={setTasks}
+        completedTasks={completedTasks}
         setCompletedTasks={setCompletedTasks}
       />
     </div>

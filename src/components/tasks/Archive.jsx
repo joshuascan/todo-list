@@ -2,7 +2,38 @@ import React from "react";
 import ArchivedTask from "./ArchivedTask";
 
 const Archive = (props) => {
-  const moveToTasks = (todo) => {};
+  const moveToTasks = (e) => {
+    e.preventDefault();
+    const newTasks = props.tasks;
+    const newArchivedTasks = [];
+    props.archived.forEach((todo) => {
+      if (todo.moveFromArchive === true) {
+        todo.moveFromArchive = false;
+        todo.completed = false;
+        newTasks.push(todo);
+      } else {
+        newArchivedTasks.push(todo);
+      }
+    });
+    props.setTasks(newTasks);
+    props.setArchived(newArchivedTasks);
+  };
+
+  const moveToCompleted = (e) => {
+    e.preventDefault();
+    const newCompletedTasks = props.completedTasks;
+    const newArchivedTasks = [];
+    props.archived.forEach((todo) => {
+      if (todo.moveFromArchive === true) {
+        todo.moveFromArchive = false;
+        newCompletedTasks.push(todo);
+      } else {
+        newArchivedTasks.push(todo);
+      }
+    });
+    props.setCompletedTasks(newCompletedTasks);
+    props.setArchived(newArchivedTasks);
+  };
 
   return (
     <div>
@@ -19,8 +50,8 @@ const Archive = (props) => {
         ))}
 
         <div>
-          <button>Move to Tasks</button>
-          <button>Move to Completed</button>
+          <button onClick={moveToTasks}>Move to Tasks</button>
+          <button onClick={moveToCompleted}>Move to Completed</button>
         </div>
       </form>
       <button>Clear Archive</button>
