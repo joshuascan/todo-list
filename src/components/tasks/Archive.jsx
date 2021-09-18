@@ -35,6 +35,10 @@ const Archive = (props) => {
     props.setArchived(newArchivedTasks);
   };
 
+  const clearArchive = () => {
+    props.setArchived([]);
+  };
+
   return (
     <div>
       <h2>Archived</h2>
@@ -54,7 +58,7 @@ const Archive = (props) => {
           <button onClick={moveToCompleted}>Move to Completed</button>
         </div>
       </form>
-      <button>Clear Archive</button>
+      <button onClick={clearArchive}>Clear Archive</button>
     </div>
   );
 };
