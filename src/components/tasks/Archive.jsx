@@ -42,23 +42,29 @@ const Archive = (props) => {
   return (
     <div>
       <h2>Archived</h2>
-      <form>
-        {props.archived.map((todo) => (
-          <ArchivedTask
-            key={todo.id}
-            todo={todo}
-            setArchived={props.setArchived}
-            setTasks={props.setTasks}
-            setCompletedTasks={props.setCompletedTasks}
-          />
-        ))}
-
+      {props.archived.length > 0 ? (
         <div>
-          <button onClick={moveToTasks}>Move to Tasks</button>
-          <button onClick={moveToCompleted}>Move to Completed</button>
+          <form>
+            {props.archived.map((todo) => (
+              <ArchivedTask
+                key={todo.id}
+                todo={todo}
+                setArchived={props.setArchived}
+                setTasks={props.setTasks}
+                setCompletedTasks={props.setCompletedTasks}
+              />
+            ))}
+
+            <div>
+              <button onClick={moveToTasks}>Move to Tasks</button>
+              <button onClick={moveToCompleted}>Move to Completed</button>
+            </div>
+          </form>
+          <button onClick={clearArchive}>Clear Archive</button>
         </div>
-      </form>
-      <button onClick={clearArchive}>Clear Archive</button>
+      ) : (
+        <h3>Nothing in Archive!</h3>
+      )}
     </div>
   );
 };

@@ -23,6 +23,7 @@ const TodoList = () => {
   const [tasks, setTasks] = useState(initialTasks);
   const [completedTasks, setCompletedTasks] = useState([]);
   const [archived, setArchived] = useState([]);
+  const [showArchived, setShowArchived] = useState(false);
 
   const addTask = (newTask) => {
     setTasks([...tasks, newTask]);
@@ -66,41 +67,53 @@ const TodoList = () => {
     setCompletedTasks([]);
   };
 
+  const toggleArchived = () => {
+    setShowArchived(!showArchived);
+  };
+
   return (
     <div>
-      <TodoForm addTask={addTask} />
-      <div>
-        <h2>Tasks</h2>
-        {tasks
-          .sort((a, b) => a.id - b.id)
-          .map((todo) => (
-            <Task
-              key={todo.id}
-              todo={todo}
-              toggleComplete={toggleComplete}
-              markComplete={markComplete}
-            />
-          ))}
-      </div>
-      <h2>Completed</h2>
-      <div>
-        {completedTasks.map((todo) => (
-          <Completed
-            key={todo.id}
-            todo={todo}
-            markIncomplete={markIncomplete}
-          />
-        ))}
-        <button onClick={archiveTask}>Archive Completed</button>
-      </div>
-      <Archive
-        archived={archived}
-        setArchived={setArchived}
-        tasks={tasks}
-        setTasks={setTasks}
-        completedTasks={completedTasks}
-        setCompletedTasks={setCompletedTasks}
-      />
+      {!showArchived ? (
+        <div>
+          <TodoForm addTask={addTask} />
+          <div>
+            <h2>Tasks</h2>
+            {tasks
+              .sort((a, b) => a.id - b.id)
+              .map((todo) => (
+                <Task
+                  key={todo.id}
+                  todo={todo}
+                  toggleComplete={toggleComplete}
+                  markComplete={markComplete}
+                />
+              ))}
+          </div>
+          <h2>Completed</h2>
+          <div>
+            {completedTasks.map((todo) => (
+              <Completed
+                key={todo.id}
+                todo={todo}
+                markIncomplete={markIncomplete}
+              />
+            ))}
+            <button onClick={archiveTask}>Archive Completed</button>
+          </div>
+        </div>
+      ) : (
+        <Archive
+          archived={archived}
+          setArchived={setArchived}
+          tasks={tasks}
+          setTasks={setTasks}
+          completedTasks={completedTasks}
+          setCompletedTasks={setCompletedTasks}
+        />
+      )}
+      <button onClick={toggleArchived}>
+        {showArchived ? "Hide Archived" : "Show Archived"}
+      </button>
     </div>
   );
 };
