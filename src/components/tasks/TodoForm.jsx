@@ -3,6 +3,7 @@ import React, { useState } from "react";
 const initialFormValues = {
   task: "",
   completed: false,
+  moveFromArchive: false,
 };
 
 const TodoForm = ({ addTask }) => {

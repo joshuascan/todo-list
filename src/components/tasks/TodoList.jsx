@@ -2,18 +2,20 @@ import React, { useState } from "react";
 import Task from "./Task";
 import Completed from "./Completed";
 import TodoForm from "./TodoForm";
-import Archived from "./Archived";
+import Archive from "./Archive";
 
 const initialTasks = [
   {
     task: "Clean kitchen",
     completed: false,
     id: 1528817077286,
+    moveFromArchive: false,
   },
   {
     task: "Update resume",
     completed: false,
     id: 1528817084358,
+    moveFromArchive: false,
   },
 ];
 
@@ -91,7 +93,7 @@ const TodoList = () => {
         ))}
         <button onClick={archiveTask}>Archive Completed</button>
       </div>
-      <Archived
+      <Archive
         archived={archived}
         setArchived={setArchived}
         setTasks={setTasks}
