@@ -1,13 +1,17 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { addTask } from "../../store/todoSlice";
 
 const initialFormValues = {
-  task: "",
+  name: "",
   completed: false,
   moveFromArchive: false,
 };
 
-const TodoForm = ({ addTask }) => {
+const TodoForm = () => {
   const [newTask, setNewTask] = useState(initialFormValues);
+
+  const dispatch = useDispatch();
 
   const handleChange = (e) => {
     setNewTask({ ...newTask, [e.target.name]: e.target.value });
@@ -15,7 +19,7 @@ const TodoForm = ({ addTask }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    addTask({ ...newTask, id: Date.now() });
+    dispatch(addTask({ ...newTask, id: Date.now() }));
     setNewTask(initialFormValues);
   };
 
@@ -29,7 +33,7 @@ const TodoForm = ({ addTask }) => {
       <form onSubmit={handleSubmit}>
         <label>Add Task</label>
         <input
-          value={newTask.task}
+          value={newTask.name}
           onChange={handleChange}
           name="task"
           type="text"

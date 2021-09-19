@@ -1,15 +1,19 @@
 import React from "react";
+import { useDispatch } from "react-redux";
+import { markComplete } from "../../store/todoSlice";
 
-const Task = (props) => {
+const Task = ({ task }) => {
+  const dispatch = useDispatch();
+
   const handleChange = () => {
-    props.markComplete(props.todo);
+    dispatch(markComplete(task));
   };
 
   return (
-    <div className={`task${props.todo.completed ? " completed" : ""}`}>
+    <div className={`task${task.completed ? " completed" : ""}`}>
       <form>
         <input type="checkbox" defaultChecked={false} onChange={handleChange} />
-        <label>{props.todo.task}</label>
+        <label>{task.name}</label>
       </form>
     </div>
   );

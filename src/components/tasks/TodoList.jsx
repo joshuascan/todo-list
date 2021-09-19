@@ -1,64 +1,23 @@
-import React, { useState } from "react";
+import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { addTask } from "../../store/todoSlice";
+import { archiveCompleted, toggleArchived } from "../../store/todoSlice";
 import Task from "./Task";
 import Completed from "./Completed";
 import TodoForm from "./TodoForm";
 import Archive from "./Archive";
 
-const initialTasks = [
-  {
-    task: "Clean kitchen",
-    completed: false,
-    id: 1528817077286,
-    moveFromArchive: false,
-  },
-  {
-    task: "Update resume",
-    completed: false,
-    id: 1528817084358,
-    moveFromArchive: false,
-  },
-];
-
 const TodoList = () => {
-  const [tasks, setTasks] = useState(initialTasks);
-  const [completedTasks, setCompletedTasks] = useState([]);
-  const [archived, setArchived] = useState([]);
-  const [showArchived, setShowArchived] = useState(false);
-
-  const task = useSelector((state) => state.todo.tasks);
+  const tasks = useSelector((state) => state.todo.tasks);
+  const completedTasks = useSelector((state) => state.todo.completedTasks);
+  const showArchived = useSelector((state) => state.todo.showArchived);
   const dispatch = useDispatch();
 
-  const addTasks = (newTask) => {
-    dispatch(addTask(newTask));
+  const handleArchiveCompleted = () => {
+    dispatch(archiveCompleted());
   };
 
-  const markComplete = (todo) => {
-    todo.completed = true;
-    setCompletedTasks([...completedTasks, todo]);
-    const newTasks = tasks.filter((task) => task.id !== todo.id);
-
-    setTasks(newTasks);
-  };
-
-  const markIncomplete = (todo) => {
-    todo.completed = false;
-    setTasks([...tasks, todo]);
-    const newCompletedTasks = completedTasks.filter(
-      (task) => task.id !== todo.id
-    );
-
-    setCompletedTasks(newCompletedTasks);
-  };
-
-  const archiveTask = () => {
-    setArchived(completedTasks);
-    setCompletedTasks([]);
-  };
-
-  const toggleArchived = () => {
-    setShowArchived(!showArchived);
+  const handleToggleArchived = () => {
+    dispatch(toggleArchived());
   };
 
   //   tasks.sort((a, b) => a.id - b.id).map....
@@ -67,36 +26,25 @@ const TodoList = () => {
     <div>
       {!showArchived ? (
         <div>
-          <TodoForm addTask={addTasks} />
+          <TodoForm />
           <div>
             <h2>Tasks</h2>
-            {task.map((todo) => (
-              <Task key={todo.id} todo={todo} markComplete={markComplete} />
+            {tasks.map((task) => (
+              <Task key={task.id} task={task} />
             ))}
           </div>
           <h2>Completed</h2>
           <div>
-            {completedTasks.map((todo) => (
-              <Completed
-                key={todo.id}
-                todo={todo}
-                markIncomplete={markIncomplete}
-              />
+            {completedTasks.map((task) => (
+              <Completed key={task.id} task={task} />
             ))}
-            <button onClick={archiveTask}>Archive Completed</button>
+            <button onClick={handleArchiveCompleted}>Archive Completed</button>
           </div>
         </div>
       ) : (
-        <Archive
-          archived={archived}
-          setArchived={setArchived}
-          tasks={tasks}
-          setTasks={setTasks}
-          completedTasks={completedTasks}
-          setCompletedTasks={setCompletedTasks}
-        />
+        <Archive />
       )}
-      <button onClick={toggleArchived}>
+      <button onClick={handleToggleArchived}>
         {showArchived ? "Hide Archived" : "Show Archived"}
       </button>
     </div>

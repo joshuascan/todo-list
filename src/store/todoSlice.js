@@ -3,13 +3,13 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   tasks: [
     {
-      task: "Clean kitchen",
+      name: "Clean kitchen",
       completed: false,
       id: 1528817077286,
       moveFromArchive: false,
     },
     {
-      task: "Update resume",
+      name: "Update resume",
       completed: false,
       id: 1528817084358,
       moveFromArchive: false,
@@ -28,23 +28,40 @@ export const todoSlice = createSlice({
       state.tasks.push(action.payload);
     },
     markComplete: (state, action) => {
-      action.payload.completed = true;
       state.completedTasks.push(action.payload);
+      state.completedTasks.map((task) => {
+        if (task.id === action.payload.id) {
+          return { ...task, completed: true };
+        } else {
+          return task;
+        }
+      });
       state.tasks = state.tasks.filter((task) => task.id !== action.payload.id);
     },
     markIncomplete: (state, action) => {
+      state.tasks.push(action.payload);
+      state.tasks.map((task) => {
+        if (task.id === action.payload.id) {
+          return { ...task, completed: false };
+        } else {
+          return task;
+        }
+      });
       state.completedTasks = state.completedTasks.filter(
         (task) => task.id !== action.payload.id
       );
-      action.payload.completed = false;
-      state.tasks.push(action.payload);
     },
     archiveCompleted: (state) => {
-      state.archived = [...state.archived, state.completedTasks];
+      state.archived = state.archived.concat(state.completedTasks);
       state.completedTasks = [];
     },
     toggleArchived: (state) => {
       state.showArchived = !state.showArchived;
+    },
+    selectForMove: (state, action) => {
+      state.archived = state.archived.map((task) => {
+        return task.id === action.payload.id ? action.payload : task;
+      });
     },
     moveToTasks: (state) => {
       state.archived.forEach((todo) => {
@@ -77,6 +94,7 @@ export const {
   markIncomplete,
   archiveCompleted,
   toggleArchived,
+  selectForMove,
   moveToTasks,
   moveToCompleted,
   clearArchive,
