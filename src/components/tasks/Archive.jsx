@@ -1,66 +1,45 @@
 import React from "react";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  moveToTasks,
+  moveToCompleted,
+  clearArchive,
+} from "../../store/todoSlice";
 import ArchivedTask from "./ArchivedTask";
 
-const Archive = (props) => {
-  const moveToTasks = (e) => {
+const Archive = () => {
+  const archived = useSelector((state) => state.todo.archived);
+  const dispatch = useDispatch();
+
+  const handleMoveToTasks = (e) => {
     e.preventDefault();
-    const newTasks = props.tasks;
-    const newArchivedTasks = [];
-    props.archived.forEach((todo) => {
-      if (todo.moveFromArchive === true) {
-        todo.moveFromArchive = false;
-        todo.completed = false;
-        newTasks.push(todo);
-      } else {
-        newArchivedTasks.push(todo);
-      }
-    });
-    props.setTasks(newTasks);
-    props.setArchived(newArchivedTasks);
+    dispatch(moveToTasks());
   };
 
-  const moveToCompleted = (e) => {
+  const handleMoveToCompleted = (e) => {
     e.preventDefault();
-    const newCompletedTasks = props.completedTasks;
-    const newArchivedTasks = [];
-    props.archived.forEach((todo) => {
-      if (todo.moveFromArchive === true) {
-        todo.moveFromArchive = false;
-        newCompletedTasks.push(todo);
-      } else {
-        newArchivedTasks.push(todo);
-      }
-    });
-    props.setCompletedTasks(newCompletedTasks);
-    props.setArchived(newArchivedTasks);
+    dispatch(moveToCompleted());
   };
 
-  const clearArchive = () => {
-    props.setArchived([]);
+  const handleClearArchive = () => {
+    dispatch(clearArchive());
   };
 
   return (
     <div>
       <h2>Archived</h2>
-      {props.archived.length > 0 ? (
+      {archived.length > 0 ? (
         <div>
-          <form>
-            {props.archived.map((todo) => (
-              <ArchivedTask
-                key={todo.id}
-                todo={todo}
-                setArchived={props.setArchived}
-                setTasks={props.setTasks}
-                setCompletedTasks={props.setCompletedTasks}
-              />
-            ))}
+          {archived.map((task) => (
+            <ArchivedTask key={task.id} task={task} />
+          ))}
 
-            <div>
-              <button onClick={moveToTasks}>Move to Tasks</button>
-              <button onClick={moveToCompleted}>Move to Completed</button>
-            </div>
-          </form>
-          <button onClick={clearArchive}>Clear Archive</button>
+          <div>
+            <button onClick={handleMoveToTasks}>Move to Tasks</button>
+            <button onClick={handleMoveToCompleted}>Move to Completed</button>
+          </div>
+
+          <button onClick={handleClearArchive}>Clear Archive</button>
         </div>
       ) : (
         <h3>Nothing in Archive!</h3>
