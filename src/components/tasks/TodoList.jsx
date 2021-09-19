@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { addTask } from "../../store/todoSlice";
 import Task from "./Task";
 import Completed from "./Completed";
 import TodoForm from "./TodoForm";
@@ -25,23 +27,11 @@ const TodoList = () => {
   const [archived, setArchived] = useState([]);
   const [showArchived, setShowArchived] = useState(false);
 
-  const addTask = (newTask) => {
-    setTasks([...tasks, newTask]);
-  };
+  const task = useSelector((state) => state.todo.tasks);
+  const dispatch = useDispatch();
 
-  const toggleComplete = (id) => {
-    const newTasks = tasks.map((task) => {
-      if (task.id === id) {
-        return {
-          ...task,
-          completed: !task.completed,
-        };
-      } else {
-        return task;
-      }
-    });
-
-    setTasks(newTasks);
+  const addTasks = (newTask) => {
+    dispatch(addTask(newTask));
   };
 
   const markComplete = (todo) => {
@@ -71,23 +61,18 @@ const TodoList = () => {
     setShowArchived(!showArchived);
   };
 
+  //   tasks.sort((a, b) => a.id - b.id).map....
+
   return (
     <div>
       {!showArchived ? (
         <div>
-          <TodoForm addTask={addTask} />
+          <TodoForm addTask={addTasks} />
           <div>
             <h2>Tasks</h2>
-            {tasks
-              .sort((a, b) => a.id - b.id)
-              .map((todo) => (
-                <Task
-                  key={todo.id}
-                  todo={todo}
-                  toggleComplete={toggleComplete}
-                  markComplete={markComplete}
-                />
-              ))}
+            {task.map((todo) => (
+              <Task key={todo.id} todo={todo} markComplete={markComplete} />
+            ))}
           </div>
           <h2>Completed</h2>
           <div>
