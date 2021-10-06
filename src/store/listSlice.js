@@ -4,11 +4,12 @@ const initialState = {
   lists: [
     {
       name: "Electronics",
+      id: 1264512343,
       tags: ["Digital", "Computers"],
       items: [
-        { name: "PlayStation 5", completed: false },
-        { name: "iPhone", completed: false },
-        { name: "LG CX", completed: false },
+        { name: "PlayStation 5", id: 175830284, completed: false },
+        { name: "iPhone", id: 175830285, completed: false },
+        { name: "LG CX", id: 175830284, completed: false },
       ],
     },
   ],

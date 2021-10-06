@@ -1,24 +1,17 @@
-import React, { useState } from "react";
+import React from "react";
+import { useSelector, useDispatch } from "react-redux";
 import ShoppingCard from "./ShoppingCard";
 import ShoppingListCreator from "./ShoppingListCreator";
 
 const ShoppingLists = (props) => {
-  const [shoppingLists, setShoppingLists] = useState([]);
-
-  const addShoppingList = (list) => {
-    const newList = {
-      name: list.name,
-      tags: list.tags !== "" ? list.tags.split(/[ ,]+/) : "",
-      id: Date.now(),
-    };
-    setShoppingLists([...shoppingLists, newList]);
-  };
+  const lists = useSelector((state) => state.list.lists);
+  const dispatch = useDispatch();
 
   return (
     <div>
-      <ShoppingListCreator addShoppingList={addShoppingList} />
+      <ShoppingListCreator />
       <div className={"shopping-lists-container"}>
-        {shoppingLists.map((list) => (
+        {lists.map((list) => (
           <ShoppingCard key={list.id} list={list} />
         ))}
       </div>
