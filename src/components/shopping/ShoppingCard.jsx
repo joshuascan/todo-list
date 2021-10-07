@@ -1,8 +1,10 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { addItem } from "../../store/listSlice";
 
 const ShoppingCard = ({ list }) => {
   const [listItem, setListItem] = useState("");
-  const [items, setItems] = useState([]);
+  const dispatch = useDispatch();
 
   const handleChange = (e) => {
     setListItem(e.target.value);
@@ -10,7 +12,12 @@ const ShoppingCard = ({ list }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setItems([...items, { name: listItem, id: Date.now() }]);
+    dispatch(
+      addItem({
+        listId: list.id,
+        newItem: { name: listItem, id: Date.now(), completed: false },
+      })
+    );
     setListItem("");
   };
 
@@ -27,7 +34,7 @@ const ShoppingCard = ({ list }) => {
         <span></span>
       )}
       <div className={"shopping-list-items"}>
-        {items.map((item) => (
+        {list.items.map((item) => (
           <p className={"list-item"} key={item.id}>
             {item.name}
           </p>

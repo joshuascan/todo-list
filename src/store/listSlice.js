@@ -9,7 +9,7 @@ const initialState = {
       items: [
         { name: "PlayStation 5", id: 175830284, completed: false },
         { name: "iPhone", id: 175830285, completed: false },
-        { name: "LG CX", id: 175830284, completed: false },
+        { name: "LG CX", id: 175830286, completed: false },
       ],
     },
   ],
@@ -22,9 +22,16 @@ export const listSlice = createSlice({
     createList: (state, action) => {
       state.lists.push(action.payload);
     },
+    addItem: (state, action) => {
+      state.lists.forEach((list) => {
+        if (list.id === action.payload.listId) {
+          list.items.push(action.payload.newItem);
+        }
+      });
+    },
   },
 });
 
-export const { createList } = listSlice.actions;
+export const { createList, addItem } = listSlice.actions;
 
 export default listSlice.reducer;
