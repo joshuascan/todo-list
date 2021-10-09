@@ -35,7 +35,7 @@ const TodoForm = () => {
         <input
           value={newTask.name}
           onChange={handleChange}
-          name="task"
+          name="name"
           type="text"
         />
         <button type="submit">Submit</button>

@@ -1,0 +1,27 @@
+{
+  "name": "todo-list",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "engines": {
+    "node": "14.16.0",
+    "npm": "7.19.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/joshuascan/todo-list.git"
+  },
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/joshuascan/todo-list/issues"
+  },
+  "homepage": "https://github.com/joshuascan/todo-list#readme",
+  "description": "",
+  "dependencies": {
+    "express": "^4.17.1",
+    "knex": "^0.95.11",
+    "pg": "^8.7.1"
+  }
+}
