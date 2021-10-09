@@ -1,12 +1,16 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { createList } from "../../store/listSlice";
 
 const initialFormValues = {
   name: "",
   tags: "",
+  items: [],
 };
 
-const ShoppingListCreator = ({ addShoppingList }) => {
+const ShoppingListCreator = () => {
   const [newList, setNewList] = useState(initialFormValues);
+  const dispatch = useDispatch();
 
   const handleChange = (e) => {
     setNewList({ ...newList, [e.target.name]: e.target.value });
@@ -14,7 +18,13 @@ const ShoppingListCreator = ({ addShoppingList }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    addShoppingList(newList);
+    dispatch(
+      createList({
+        ...newList,
+        tags: newList.tags !== "" ? newList.tags.split(/[ ,]+/) : [],
+        id: Date.now(),
+      })
+    );
     setNewList(initialFormValues);
   };
 
