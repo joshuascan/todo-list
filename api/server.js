@@ -4,9 +4,13 @@ const cors = require("cors");
 
 const server = express();
 
+const tasksRouter = require("./tasks/tasks-router");
+
 server.use(express.json());
 server.use(helmet());
 server.use(cors());
+
+server.use("/api/tasks", tasksRouter);
 
 server.get("/", (req, res) => {
   res.status(200).json({ message: "API is up" });
