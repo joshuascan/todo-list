@@ -86,8 +86,8 @@ exports.up = async (knex) => {
     })
     .createTable("notes", (notes) => {
       notes.increments("note_id");
-      notes.string("name", 50).notNullable();
-      notes.text("description").notNullable();
+      notes.string("title", 50).notNullable();
+      notes.text("body").notNullable();
       notes
         .integer("user_id")
         .unsigned()
