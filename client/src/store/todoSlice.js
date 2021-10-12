@@ -15,7 +15,6 @@ const initialState = {
       moveFromArchive: false,
     },
   ],
-  completedTasks: [],
   archived: [],
   showArchived: false,
 };
@@ -27,33 +26,20 @@ export const todoSlice = createSlice({
     addTask: (state, action) => {
       state.tasks.push(action.payload);
     },
-    markComplete: (state, action) => {
-      state.completedTasks.push(action.payload);
-      state.completedTasks.map((task) => {
-        if (task.id === action.payload.id) {
-          return { ...task, completed: true };
-        } else {
-          return task;
-        }
-      });
-      state.tasks = state.tasks.filter((task) => task.id !== action.payload.id);
-    },
-    markIncomplete: (state, action) => {
-      state.tasks.push(action.payload);
+    toggleComplete: (state, action) => {
       state.tasks.map((task) => {
-        if (task.id === action.payload.id) {
-          return { ...task, completed: false };
+        if (task.id === action.payload) {
+          return (task.completed = !task.completed);
         } else {
           return task;
         }
       });
-      state.completedTasks = state.completedTasks.filter(
-        (task) => task.id !== action.payload.id
-      );
     },
     archiveCompleted: (state) => {
-      state.archived = state.archived.concat(state.completedTasks);
-      state.completedTasks = [];
+      state.archived = state.archived.concat(
+        state.tasks.filter((task) => task.completed === true)
+      );
+      state.tasks = state.tasks.filter((task) => task.completed === false);
     },
     toggleArchived: (state) => {
       state.showArchived = !state.showArchived;
@@ -69,6 +55,7 @@ export const todoSlice = createSlice({
           todo.moveFromArchive = false;
           todo.completed = false;
           state.tasks.push(todo);
+          state.tasks.sort((a, b) => a.id - b.id);
           state.archived = state.archived.filter((task) => task.id !== todo.id);
         }
       });
@@ -77,7 +64,8 @@ export const todoSlice = createSlice({
       state.archived.forEach((todo) => {
         if (todo.moveFromArchive === true) {
           todo.moveFromArchive = false;
-          state.completedTasks.push(todo);
+          state.tasks.push(todo);
+          state.tasks.sort((a, b) => a.id - b.id);
           state.archived = state.archived.filter((task) => task.id !== todo.id);
         }
       });
@@ -90,8 +78,7 @@ export const todoSlice = createSlice({
 
 export const {
   addTask,
-  markComplete,
-  markIncomplete,
+  toggleComplete,
   archiveCompleted,
   toggleArchived,
   selectForMove,

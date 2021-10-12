@@ -1,47 +1,50 @@
 {
   "name": "todo-list",
-  "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-    "@reduxjs/toolkit": "^1.6.1",
-    "@testing-library/jest-dom": "^5.14.1",
-    "@testing-library/react": "^11.2.7",
-    "@testing-library/user-event": "^12.8.3",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
-    "react-redux": "^7.2.5",
-    "react-router-dom": "^5.3.0",
-    "react-scripts": "4.0.3",
-    "redux-logger": "^3.0.6",
-    "redux-thunk": "^2.3.0",
-    "web-vitals": "^1.1.2"
-  },
+  "version": "1.0.0",
+  "main": "index.js",
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "sass": "sass src/Sass:src/Css --watch --no-source-map"
+    "start": "node index.js",
+    "server": "nodemon index.js",
+    "migrate": "knex migrate:latest",
+    "rollback": "knex migrate:rollback",
+    "seed": "knex seed:run",
+    "resetdb": "npm run rollback && npm run migrate && npm run seed",
+    "migrateh": "heroku run knex migrate:latest -a forgetful-js",
+    "rollbackh": "heroku run knex migrate:rollback -a forgetful-js",
+    "databaseh": "heroku pg:psql -a forgetful-js",
+    "seedh": "heroku run knex seed:run -a forgetful-js",
+    "test": "cross-env NODE_ENV=testing jest --watchAll --verbose --runInBand",
+    "deploy": "git push heroku main"
   },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
+  "engines": {
+    "node": "14.18.0",
+    "npm": "6.14.15"
   },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/joshuascan/todo-list.git"
+  },
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/joshuascan/todo-list/issues"
+  },
+  "homepage": "https://github.com/joshuascan/todo-list#readme",
+  "description": "",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "helmet": "^4.6.0",
+    "jsonwebtoken": "^8.5.1",
+    "knex": "^0.95.11",
+    "knex-cleaner": "^1.3.1",
+    "pg": "^8.7.1"
   },
   "devDependencies": {
-    "sass": "^1.41.1"
+    "cross-env": "^7.0.3",
+    "eslint": "^7.32.0",
+    "eslint-plugin-react": "^7.26.1",
+    "nodemon": "^2.0.13"
   }
 }
