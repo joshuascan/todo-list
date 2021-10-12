@@ -7,7 +7,6 @@ const Task = ({ task }) => {
 
   const handleChange = () => {
     dispatch(toggleComplete(task.id));
-    console.log("click");
   };
 
   return (

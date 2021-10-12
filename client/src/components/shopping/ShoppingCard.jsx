@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { addItem } from "../../store/listSlice";
+import Item from "./Item";
 
 const ShoppingCard = ({ list }) => {
   const [listItem, setListItem] = useState("");
@@ -35,9 +36,7 @@ const ShoppingCard = ({ list }) => {
       )}
       <div className={"shopping-list-items"}>
         {list.items.map((item) => (
-          <p className={"list-item"} key={item.id}>
-            {item.name}
-          </p>
+          <Item key={item.id} item={item} listId={list.id} />
         ))}
       </div>
       <form onSubmit={handleSubmit}>

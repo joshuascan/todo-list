@@ -29,9 +29,18 @@ export const listSlice = createSlice({
         }
       });
     },
+    markComplete: (state, action) => {
+      state.lists.forEach((list) => {
+        if (list.id === action.payload.listId) {
+          list.items = list.items.filter(
+            (item) => item.id !== action.payload.itemId
+          );
+        }
+      });
+    },
   },
 });
 
-export const { createList, addItem } = listSlice.actions;
+export const { createList, addItem, markComplete } = listSlice.actions;
 
 export default listSlice.reducer;
