@@ -1,12 +1,12 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { markComplete } from "../../store/todoSlice";
+import { toggleComplete } from "../../store/todoSlice";
 
 const Task = ({ task }) => {
   const dispatch = useDispatch();
 
   const handleChange = () => {
-    dispatch(markComplete(task));
+    dispatch(toggleComplete(task.id));
   };
 
   return (

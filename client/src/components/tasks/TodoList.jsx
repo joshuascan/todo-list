@@ -17,7 +17,8 @@ const TodoList = () => {
   };
 
   const handleToggleArchived = () => {
-    dispatch(toggleArchived());
+    // dispatch(toggleArchived());
+    console.log(tasks);
   };
 
   //   tasks.sort((a, b) => a.id - b.id).map....
@@ -29,15 +30,19 @@ const TodoList = () => {
           <TodoForm />
           <div>
             <h2>Tasks</h2>
-            {tasks.map((task) => (
-              <Task key={task.id} task={task} />
-            ))}
+            {tasks.map((task) => {
+              if (task.completed === false) {
+                return <Task key={task.id} task={task} />;
+              }
+            })}
           </div>
           <h2>Completed</h2>
           <div>
-            {completedTasks.map((task) => (
-              <Completed key={task.id} task={task} />
-            ))}
+            {tasks.map((task) => {
+              if (task.completed === true) {
+                return <Task key={task.id} task={task} />;
+              }
+            })}
             <button onClick={handleArchiveCompleted}>Archive Completed</button>
           </div>
         </div>

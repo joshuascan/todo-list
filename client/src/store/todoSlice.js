@@ -27,16 +27,15 @@ export const todoSlice = createSlice({
     addTask: (state, action) => {
       state.tasks.push(action.payload);
     },
-    markComplete: (state, action) => {
-      state.completedTasks.push(action.payload);
-      state.completedTasks.map((task) => {
-        if (task.id === action.payload.id) {
-          return { ...task, completed: true };
+    toggleComplete: (state, action) => {
+      state.tasks.map((task) => {
+        if (task.id === action.payload) {
+          return (task.completed = !task.completed);
         } else {
           return task;
         }
       });
-      state.tasks = state.tasks.filter((task) => task.id !== action.payload.id);
+      //   state.tasks = state.tasks.filter((task) => task.id !== action.payload.id);
     },
     markIncomplete: (state, action) => {
       state.tasks.push(action.payload);
@@ -90,7 +89,7 @@ export const todoSlice = createSlice({
 
 export const {
   addTask,
-  markComplete,
+  toggleComplete,
   markIncomplete,
   archiveCompleted,
   toggleArchived,
