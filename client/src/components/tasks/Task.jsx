@@ -7,12 +7,17 @@ const Task = ({ task }) => {
 
   const handleChange = () => {
     dispatch(toggleComplete(task.id));
+    console.log("click");
   };
 
   return (
     <div className={`task${task.completed ? " completed" : ""}`}>
       <form>
-        <input type="checkbox" defaultChecked={false} onChange={handleChange} />
+        <input
+          type="checkbox"
+          defaultChecked={task.completed ? true : false}
+          onChange={handleChange}
+        />
         <label>{task.name}</label>
       </form>
     </div>

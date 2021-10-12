@@ -17,8 +17,7 @@ const TodoList = () => {
   };
 
   const handleToggleArchived = () => {
-    // dispatch(toggleArchived());
-    console.log(tasks);
+    dispatch(toggleArchived());
   };
 
   //   tasks.sort((a, b) => a.id - b.id).map....
