@@ -25,4 +25,12 @@ router.get("/archived", (req, res, next) => {
     .catch(next);
 });
 
+router.post("/archived", (req, res, next) => {
+  Tasks.addToArchive(1, req.body)
+    .then((task) => {
+      res.status(201).json(task);
+    })
+    .catch(next);
+});
+
 module.exports = router;
