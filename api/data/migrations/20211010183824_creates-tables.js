@@ -19,20 +19,6 @@ exports.up = async (knex) => {
         .onDelete("CASCADE")
         .onUpdate("CASCADE");
     })
-    .createTable("completedTasks", (completedTasks) => {
-      completedTasks.increments("task_id");
-      completedTasks.string("name", 30).notNullable();
-      completedTasks.boolean("completed").defaultTo(false);
-      completedTasks.boolean("moveFromArchive").defaultTo(false);
-      completedTasks
-        .integer("user_id")
-        .unsigned()
-        .notNullable()
-        .references("user_id")
-        .inTable("users")
-        .onDelete("CASCADE")
-        .onUpdate("CASCADE");
-    })
     .createTable("archived", (archived) => {
       archived.increments("task_id");
       archived.string("name", 30).notNullable();
@@ -106,7 +92,6 @@ exports.down = async (knex) => {
     .dropTableIfExists("tags")
     .dropTableIfExists("lists")
     .dropTableIfExists("archived")
-    .dropTableIfExists("completedTasks")
     .dropTableIfExists("tasks")
     .dropTableIfExists("users");
 };

@@ -15,10 +15,6 @@ async function addTask(user_id, task) {
   return newTask;
 }
 
-function findAllCompletedTasks(user_id) {
-  return db("completedTasks").where("user_id", user_id);
-}
-
 function findAllArchivedTasks(user_id) {
   return db("archived").where("user_id", user_id);
 }
@@ -26,6 +22,5 @@ function findAllArchivedTasks(user_id) {
 module.exports = {
   findAllTasks,
   addTask,
-  findAllCompletedTasks,
   findAllArchivedTasks,
 };
