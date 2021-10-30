@@ -5,4 +5,8 @@ async function add(user) {
   return newUser;
 }
 
-module.exports = { add };
+function findBy(filter) {
+  return db("users").where(filter);
+}
+
+module.exports = { add, findBy };

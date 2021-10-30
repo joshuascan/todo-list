@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const Auth = require("./auth-model");
+const Users = require("../users/users-model");
 const bcrypt = require("bcryptjs");
 const tokenBuilder = require("./token-builder");
 
@@ -9,7 +9,7 @@ router.post("/register", (req, res, next) => {
   const hash = bcrypt.hashSync(user.password, rounds);
   user.password = hash;
 
-  Auth.add(user)
+  Users.add(user)
     .then((newUser) => {
       res.status(201).json({
         message: `Account successfully created. Welcome ${newUser.username}!`,
@@ -17,6 +17,12 @@ router.post("/register", (req, res, next) => {
       });
     })
     .catch(next);
+});
+
+router.post("/login", (req, res, next) => {
+    try {
+        if (bcrypt.compareSync(req.body.password, req.validUser.password))
+    }
 });
 
 module.exports = router;
