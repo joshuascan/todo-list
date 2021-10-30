@@ -2,6 +2,7 @@ const router = require("express").Router();
 const Users = require("../users/users-model");
 const bcrypt = require("bcryptjs");
 const tokenBuilder = require("./token-builder");
+const { checkUsernameExists } = require("./auth-middleware");
 
 router.post("/register", (req, res, next) => {
   let user = req.body;
@@ -20,9 +21,20 @@ router.post("/register", (req, res, next) => {
 });
 
 router.post("/login", (req, res, next) => {
-    try {
-        if (bcrypt.compareSync(req.body.password, req.validUser.password))
+  try {
+    if (bcrypt.compareSync(req.body.password, req.validUser.password)) {
+      const token = tokenBuilder(req.validUser);
+      res.status(200).json({
+        user_id: req.validUser.user_id,
+        message: `Welcome back ${req.validUser.username}`,
+        token,
+      });
+    } else {
+      next({ status: 401, message: "Invalid credentials" });
     }
+  } catch (err) {
+    next(err);
+  }
 });
 
 module.exports = router;
