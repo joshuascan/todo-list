@@ -2,7 +2,7 @@ const router = require("express").Router();
 const Tasks = require("./tasks-model");
 
 router.get("/", (req, res, next) => {
-  Tasks.findAllTasks(1)
+  Tasks.findAllTasks(req.decodedToken.subject)
     .then((tasks) => {
       res.status(200).json(tasks);
     })
@@ -10,7 +10,7 @@ router.get("/", (req, res, next) => {
 });
 
 router.post("/", (req, res, next) => {
-  Tasks.addTask(1, req.body)
+  Tasks.addTask(req.decodedToken.subject, req.body)
     .then((task) => {
       res.status(201).json(task);
     })
@@ -18,7 +18,7 @@ router.post("/", (req, res, next) => {
 });
 
 router.get("/archived", (req, res, next) => {
-  Tasks.findAllArchivedTasks(1)
+  Tasks.findAllArchivedTasks(req.decodedToken.subject)
     .then((tasks) => {
       res.status(200).json(tasks);
     })
@@ -26,7 +26,7 @@ router.get("/archived", (req, res, next) => {
 });
 
 router.post("/archived", (req, res, next) => {
-  Tasks.addToArchive(1, req.body)
+  Tasks.addToArchive(req.decodedToken.subject, req.body)
     .then((task) => {
       res.status(201).json(task);
     })

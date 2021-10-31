@@ -2,6 +2,8 @@ const express = require("express");
 const helmet = require("helmet");
 const cors = require("cors");
 
+const { restricted } = require("./auth/auth-middleware");
+
 const server = express();
 
 const tasksRouter = require("./tasks/tasks-router");
@@ -12,7 +14,7 @@ server.use(helmet());
 server.use(cors());
 
 server.use("/api/auth", authRouter);
-server.use("/api/tasks", tasksRouter);
+server.use("/api/tasks", restricted, tasksRouter);
 
 server.get("/", (req, res) => {
   res.status(200).json({ message: "API is up" });
