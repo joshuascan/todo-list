@@ -59,8 +59,23 @@ async function validateCredentials(req, res, next) {
   }
 }
 
+function restricted(req, res, next) {
+  const token = req.headers.authorization;
+  if (!token) {
+    return next({ status: 401, message: "Token required." });
+  }
+  jwt.verify(token, JWT_SECRET, (err, decodedToken) => {
+    if (err) {
+      return next({ status: 401, message: "Invalid token." });
+    }
+    req.decodedToken = decodedToken;
+    next();
+  });
+}
+
 module.exports = {
   checkUsernameUnique,
   checkUsernameExists,
   validateCredentials,
+  restricted,
 };
