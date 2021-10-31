@@ -46,7 +46,7 @@ function findAllArchivedTasks(user_id) {
   return db("archived").where("user_id", user_id);
 }
 
-async function addToArchive(user_id, tasks) {
+async function addToArchive(tasks) {
   const newTasks = await db("archived").insert(tasks, [
     "user_id",
     "task_id",
@@ -57,6 +57,13 @@ async function addToArchive(user_id, tasks) {
   return newTasks;
 }
 
+async function clearArchive(user_id) {
+  const deletedTasks = await db("archived")
+    .del(["name", "task_id"])
+    .where("user_id", user_id);
+  return deletedTasks;
+}
+
 module.exports = {
   findAllTasks,
   findById,
@@ -65,4 +72,5 @@ module.exports = {
   removeTask,
   findAllArchivedTasks,
   addToArchive,
+  clearArchive,
 };

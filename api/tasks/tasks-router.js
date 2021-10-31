@@ -26,9 +26,17 @@ router.get("/archived", (req, res, next) => {
 });
 
 router.post("/archived", (req, res, next) => {
-  Tasks.addToArchive(req.decodedToken.subject, req.body)
+  Tasks.addToArchive(req.body)
     .then((task) => {
       res.status(201).json(task);
+    })
+    .catch(next);
+});
+
+router.delete("/archived", (req, res, next) => {
+  Tasks.clearArchive(req.decodedToken.subject)
+    .then((tasks) => {
+      res.status(200).json(tasks);
     })
     .catch(next);
 });
