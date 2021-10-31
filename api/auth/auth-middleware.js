@@ -33,7 +33,34 @@ async function checkUsernameExists(req, res, next) {
   }
 }
 
+async function validateCredentials(req, res, next) {
+  const { username, password } = req.body;
+  if (
+    !username ||
+    username.trim() === "" ||
+    !password ||
+    password.trim() === ""
+  ) {
+    next({ status: 422, message: "Username and password required." });
+  } else if (username.trim().length < 3 || username.trim() > 25) {
+    next({
+      status: 422,
+      message: "Username must be between 3 and 25 characters.",
+    });
+  } else if (password.trim().length < 6 || password.trim().length > 30) {
+    next({
+      status: 422,
+      message: "Password must be between 6 and 30 characters.",
+    });
+  } else {
+    req.body.username = username.trim();
+    req.body.password = password.trim();
+    next();
+  }
+}
+
 module.exports = {
-  checkUsernameExists,
   checkUsernameUnique,
+  checkUsernameExists,
+  validateCredentials,
 };
