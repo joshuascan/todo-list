@@ -1,6 +1,8 @@
 const router = require("express").Router();
 const Tasks = require("./tasks-model");
 
+// TASK ENDPOINTS
+
 router.get("/", (req, res, next) => {
   Tasks.findAllTasks(req.decodedToken.subject)
     .then((tasks) => {
@@ -17,13 +19,15 @@ router.post("/", (req, res, next) => {
     .catch(next);
 });
 
-router.put("/task_id", (req, res, next) => {
+router.put("/:task_id", (req, res, next) => {
   Tasks.updateTask(req.decodedToken.subject, req.params.task_id, req.body)
     .then((task) => {
       res.status(200).json(task);
     })
     .catch(next);
 });
+
+// ARCHIVE ENDPOINTS
 
 router.get("/archived", (req, res, next) => {
   Tasks.findAllArchivedTasks(req.decodedToken.subject)
