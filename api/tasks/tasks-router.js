@@ -17,6 +17,14 @@ router.post("/", (req, res, next) => {
     .catch(next);
 });
 
+router.put("/task_id", (req, res, next) => {
+  Tasks.updateTask(req.decodedToken.subject, req.params.task_id, req.body)
+    .then((task) => {
+      res.status(200).json(task);
+    })
+    .catch(next);
+});
+
 router.get("/archived", (req, res, next) => {
   Tasks.findAllArchivedTasks(req.decodedToken.subject)
     .then((tasks) => {
