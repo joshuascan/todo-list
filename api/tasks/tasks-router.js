@@ -35,6 +35,14 @@ router.put("/:task_id", (req, res, next) => {
     .catch(next);
 });
 
+router.delete("/:task_id", (req, res, next) => {
+  Tasks.removeTask(req.params.task_id)
+    .then((task) => {
+      res.status(200).json(task);
+    })
+    .catch(next);
+});
+
 // ARCHIVE ENDPOINTS
 
 router.get("/archived", (req, res, next) => {
