@@ -4,6 +4,7 @@ import { archiveCompleted, toggleArchived } from "../../store/todoSlice";
 import Task from "./Task";
 import TodoForm from "./TodoForm";
 import Archive from "./Archive";
+import Navigation from "../Navigation";
 
 const TodoList = () => {
   const tasks = useSelector((state) => state.todo.tasks);
@@ -22,6 +23,7 @@ const TodoList = () => {
 
   return (
     <div>
+      <Navigation />
       {!showArchived ? (
         <div>
           <TodoForm />

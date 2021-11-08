@@ -2,6 +2,7 @@ import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import ShoppingCard from "./ShoppingCard";
 import ShoppingListCreator from "./ShoppingListCreator";
+import Navigation from "../Navigation";
 
 const ShoppingLists = (props) => {
   const lists = useSelector((state) => state.list.lists);
@@ -9,6 +10,7 @@ const ShoppingLists = (props) => {
 
   return (
     <div>
+      <Navigation />
       <ShoppingListCreator />
       <div className={"shopping-lists-container"}>
         {lists.map((list) => (
