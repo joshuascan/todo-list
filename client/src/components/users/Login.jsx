@@ -1,6 +1,7 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
+import { userLogin } from "../../store/userSlice";
 
 const initialFormValues = {
   username: "",
@@ -10,6 +11,7 @@ const initialFormValues = {
 const Login = () => {
   const [formValues, setFormValues] = useState(initialFormValues);
 
+  const { loginSuccess } = useSelector((state) => state.user);
   const { push } = useHistory();
   const dispatch = useDispatch();
 
@@ -19,7 +21,13 @@ const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    dispatch(userLogin(formValues));
+    setFormValues(initialFormValues);
   };
+
+  useEffect(() => {
+    if (loginSuccess) push("/tasks");
+  }, [loginSuccess, push]);
 
   return (
     <div>
