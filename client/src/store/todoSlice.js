@@ -15,6 +15,11 @@ export const todoSlice = createSlice({
     taskAdded: (todo, action) => {
       todo.tasks.push(action.payload);
     },
+    taskEdited: (todo, action) => {
+      todo.tasks = todo.tasks.map((task) => {
+        return todo.tasks === action.payload.task_id ? action.payload : task;
+      });
+    },
     toggleComplete: (todo, action) => {
       todo.tasks.map((task) => {
         if (task.id === action.payload) {
@@ -87,9 +92,21 @@ export const addTask = (newTask) => (dispatch) => {
     });
 };
 
+export const editTask = (id, editedTask) => (dispatch) => {
+  axiosWithAuth()
+    .put(`/api/tasks/${id}`, editedTask)
+    .then((res) => {
+      dispatch(taskEdited(res.data));
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
 export const {
   tasksFetched,
   taskAdded,
+  taskEdited,
   toggleComplete,
   archiveCompleted,
   toggleArchived,
