@@ -1,30 +1,38 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { axiosWithAuth } from "../auth/axiosWithAuth";
 
-const initialState = {
-  tasks: [
-    {
-      name: "Clean kitchen",
-      completed: false,
-      id: 1528817077286,
-      moveFromArchive: false,
-    },
-    {
-      name: "Update resume",
-      completed: false,
-      id: 1528817084358,
-      moveFromArchive: false,
-    },
-  ],
-  archived: [],
-  showArchived: false,
-};
+// const initialState = {
+//   tasks: [
+//     {
+//       name: "Clean kitchen",
+//       completed: false,
+//       id: 1528817077286,
+//       moveFromArchive: false,
+//     },
+//     {
+//       name: "Update resume",
+//       completed: false,
+//       id: 1528817084358,
+//       moveFromArchive: false,
+//     },
+//   ],
+//   archived: [],
+//   showArchived: false,
+// };
 
 export const todoSlice = createSlice({
   name: "todo",
-  initialState,
+  initialState: {
+    tasks: [],
+    archived: [],
+    showArchived: false,
+  },
   reducers: {
-    addTask: (state, action) => {
-      state.tasks.push(action.payload);
+    tasksFetched: (todo, action) => {
+      todo.tasks = action.payload;
+    },
+    addTask: (todo, action) => {
+      todo.tasks.push(action.payload);
     },
     toggleComplete: (state, action) => {
       state.tasks.map((task) => {
@@ -76,7 +84,19 @@ export const todoSlice = createSlice({
   },
 });
 
+export const fetchTasks = () => (dispatch) => {
+  axiosWithAuth()
+    .get("/api/tasks")
+    .then((res) => {
+      dispatch(tasksFetched(res.data));
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
 export const {
+  tasksFetched,
   addTask,
   toggleComplete,
   archiveCompleted,
