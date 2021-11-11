@@ -31,11 +31,11 @@ export const todoSlice = createSlice({
     tasksFetched: (todo, action) => {
       todo.tasks = action.payload;
     },
-    addTask: (todo, action) => {
+    taskAdded: (todo, action) => {
       todo.tasks.push(action.payload);
     },
-    toggleComplete: (state, action) => {
-      state.tasks.map((task) => {
+    toggleComplete: (todo, action) => {
+      todo.tasks.map((task) => {
         if (task.id === action.payload) {
           return (task.completed = !task.completed);
         } else {
@@ -43,43 +43,43 @@ export const todoSlice = createSlice({
         }
       });
     },
-    archiveCompleted: (state) => {
-      state.archived = state.archived.concat(
-        state.tasks.filter((task) => task.completed === true)
+    archiveCompleted: (todo) => {
+      todo.archived = todo.archived.concat(
+        todo.tasks.filter((task) => task.completed === true)
       );
-      state.tasks = state.tasks.filter((task) => task.completed === false);
+      todo.tasks = todo.tasks.filter((task) => task.completed === false);
     },
-    toggleArchived: (state) => {
-      state.showArchived = !state.showArchived;
+    toggleArchived: (todo) => {
+      todo.showArchived = !todo.showArchived;
     },
-    selectForMove: (state, action) => {
-      state.archived = state.archived.map((task) => {
+    selectForMove: (todo, action) => {
+      todo.archived = todo.archived.map((task) => {
         return task.id === action.payload.id ? action.payload : task;
       });
     },
-    moveToTasks: (state) => {
-      state.archived.forEach((todo) => {
+    moveToTasks: (todo) => {
+      todo.archived.forEach((todo) => {
         if (todo.moveFromArchive === true) {
           todo.moveFromArchive = false;
           todo.completed = false;
-          state.tasks.push(todo);
-          state.tasks.sort((a, b) => a.id - b.id);
-          state.archived = state.archived.filter((task) => task.id !== todo.id);
+          todo.tasks.push(todo);
+          todo.tasks.sort((a, b) => a.id - b.id);
+          todo.archived = todo.archived.filter((task) => task.id !== todo.id);
         }
       });
     },
-    moveToCompleted: (state) => {
-      state.archived.forEach((todo) => {
+    moveToCompleted: (todo) => {
+      todo.archived.forEach((todo) => {
         if (todo.moveFromArchive === true) {
           todo.moveFromArchive = false;
-          state.tasks.push(todo);
-          state.tasks.sort((a, b) => a.id - b.id);
-          state.archived = state.archived.filter((task) => task.id !== todo.id);
+          todo.tasks.push(todo);
+          todo.tasks.sort((a, b) => a.id - b.id);
+          todo.archived = todo.archived.filter((task) => task.id !== todo.id);
         }
       });
     },
-    clearArchive: (state) => {
-      state.archived = [];
+    clearArchive: (todo) => {
+      todo.archived = [];
     },
   },
 });
@@ -95,9 +95,20 @@ export const fetchTasks = () => (dispatch) => {
     });
 };
 
+export const addTask = (newTask) => (dispatch) => {
+  axiosWithAuth()
+    .post("/api/tasks", newTask)
+    .then((res) => {
+      dispatch(taskAdded(res.data));
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
 export const {
   tasksFetched,
-  addTask,
+  taskAdded,
   toggleComplete,
   archiveCompleted,
   toggleArchived,
