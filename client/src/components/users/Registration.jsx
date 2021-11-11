@@ -2,18 +2,18 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
 import { Link } from "react-router-dom";
-import { userLogin } from "../../store/userSlice";
+import { userRegister } from "../../store/userSlice";
 
 const initialFormValues = {
   username: "",
   password: "",
 };
 
-const Login = () => {
+const Registration = () => {
   const [formValues, setFormValues] = useState(initialFormValues);
 
-  const { loginSuccess } = useSelector((state) => state.user);
   const { push } = useHistory();
+  const { registerSuccess } = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
   const handleChange = (e) => {
@@ -22,17 +22,17 @@ const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(userLogin(formValues));
+    dispatch(userRegister(formValues));
     setFormValues(initialFormValues);
   };
 
   useEffect(() => {
-    if (loginSuccess) push("/tasks");
-  }, [loginSuccess, push]);
+    if (registerSuccess) push("/login");
+  }, [registerSuccess, push]);
 
   return (
     <div>
-      <h2>Login</h2>
+      <h2>Register</h2>
       <form onSubmit={handleSubmit}>
         <label>Username</label>
         <input
@@ -50,9 +50,9 @@ const Login = () => {
         />
         <button type="submit">Submit</button>
       </form>
-      <Link to="/register">Register</Link>
+      <Link to="/login">Log in</Link>
     </div>
   );
 };
 
-export default Login;
+export default Registration;

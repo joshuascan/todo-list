@@ -6,9 +6,6 @@ import reportWebVitals from "./reportWebVitals";
 import { store } from "./store";
 import { Provider } from "react-redux";
 
-import logger from "redux-logger";
-import thunk from "redux-thunk";
-
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
