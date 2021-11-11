@@ -1,25 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { axiosWithAuth } from "../auth/axiosWithAuth";
 
-// const initialState = {
-//   tasks: [
-//     {
-//       name: "Clean kitchen",
-//       completed: false,
-//       id: 1528817077286,
-//       moveFromArchive: false,
-//     },
-//     {
-//       name: "Update resume",
-//       completed: false,
-//       id: 1528817084358,
-//       moveFromArchive: false,
-//     },
-//   ],
-//   archived: [],
-//   showArchived: false,
-// };
-
 export const todoSlice = createSlice({
   name: "todo",
   initialState: {
