@@ -20,6 +20,11 @@ export const todoSlice = createSlice({
         return todo.tasks === action.payload.task_id ? action.payload : task;
       });
     },
+    taskDeleted: (todo, action) => {
+      todo.tasks = todo.tasks.filter(
+        (task) => task.task_id !== action.payload.task_id
+      );
+    },
     toggleComplete: (todo, action) => {
       todo.tasks.map((task) => {
         if (task.id === action.payload) {
@@ -103,10 +108,22 @@ export const editTask = (id, editedTask) => (dispatch) => {
     });
 };
 
+export const deleteTask = (id) => (dispatch) => {
+  axiosWithAuth()
+    .delete(`/api/tasks/${id}`)
+    .then((res) => {
+      dispatch(taskDeleted(res.data));
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
 export const {
   tasksFetched,
   taskAdded,
   taskEdited,
+  taskDeleted,
   toggleComplete,
   archiveCompleted,
   toggleArchived,
