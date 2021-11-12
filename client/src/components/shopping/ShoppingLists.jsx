@@ -1,12 +1,11 @@
 import React from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import ShoppingCard from "./ShoppingCard";
 import ShoppingListCreator from "./ShoppingListCreator";
 import Navigation from "../Navigation";
 
-const ShoppingLists = (props) => {
+const ShoppingLists = () => {
   const lists = useSelector((state) => state.list.lists);
-  const dispatch = useDispatch();
 
   return (
     <div>

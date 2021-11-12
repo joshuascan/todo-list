@@ -1,13 +1,17 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { toggleComplete } from "../../store/todoSlice";
+import { editTask, toggleComplete } from "../../store/todoSlice";
 
 const Task = ({ task }) => {
   const dispatch = useDispatch();
 
   const handleChange = () => {
-    dispatch(toggleComplete(task.id));
+    dispatch(toggleComplete(task.task_id));
   };
+
+  useEffect(() => {
+    dispatch(editTask(task.task_id, task));
+  }, [dispatch, task]);
 
   return (
     <div className={`task${task.completed ? " completed" : ""}`}>
@@ -18,6 +22,7 @@ const Task = ({ task }) => {
           onChange={handleChange}
         />
         <label>{task.name}</label>
+        {/* <button onClick={handleClick}>click</button> */}
       </form>
     </div>
   );

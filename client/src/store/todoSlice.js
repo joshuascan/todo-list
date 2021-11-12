@@ -17,7 +17,7 @@ export const todoSlice = createSlice({
     },
     taskEdited: (todo, action) => {
       todo.tasks = todo.tasks.map((task) => {
-        return todo.tasks === action.payload.task_id ? action.payload : task;
+        return task.task_id === action.payload.task_id ? action.payload : task;
       });
     },
     taskDeleted: (todo, action) => {
@@ -27,7 +27,7 @@ export const todoSlice = createSlice({
     },
     toggleComplete: (todo, action) => {
       todo.tasks.map((task) => {
-        if (task.id === action.payload) {
+        if (task.task_id === action.payload) {
           return (task.completed = !task.completed);
         } else {
           return task;

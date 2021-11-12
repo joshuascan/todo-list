@@ -37,6 +37,8 @@ const TodoList = () => {
             {tasks.map((task) => {
               if (task.completed === false) {
                 return <Task key={task.task_id} task={task} />;
+              } else {
+                return null;
               }
             })}
           </div>
@@ -44,7 +46,9 @@ const TodoList = () => {
           <div>
             {tasks.map((task) => {
               if (task.completed === true) {
-                return <Task key={task.id} task={task} />;
+                return <Task key={task.task_id} task={task} />;
+              } else {
+                return null;
               }
             })}
             <button onClick={handleArchiveCompleted}>Archive Completed</button>
