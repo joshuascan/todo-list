@@ -25,15 +25,6 @@ export const todoSlice = createSlice({
         (task) => task.task_id !== action.payload.task_id
       );
     },
-    toggleComplete: (todo, action) => {
-      todo.tasks.map((task) => {
-        if (task.task_id === action.payload) {
-          return (task.completed = !task.completed);
-        } else {
-          return task;
-        }
-      });
-    },
     archiveCompleted: (todo) => {
       todo.archived = todo.archived.concat(
         todo.tasks.filter((task) => task.completed === true)

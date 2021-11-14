@@ -1,28 +1,23 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useDispatch } from "react-redux";
-import { editTask, toggleComplete } from "../../store/todoSlice";
+import { editTask } from "../../store/todoSlice";
 
 const Task = ({ task }) => {
   const dispatch = useDispatch();
 
   const handleChange = () => {
-    dispatch(toggleComplete(task.task_id));
+    dispatch(editTask(task.task_id, { ...task, completed: !task.completed }));
   };
-
-  useEffect(() => {
-    dispatch(editTask(task.task_id, task));
-  }, [dispatch, task]);
 
   return (
     <div className={`task${task.completed ? " completed" : ""}`}>
       <form>
         <input
           type="checkbox"
-          defaultChecked={task.completed ? true : false}
+          checked={task.completed ? true : false}
           onChange={handleChange}
         />
         <label>{task.name}</label>
-        {/* <button onClick={handleClick}>click</button> */}
       </form>
     </div>
   );
