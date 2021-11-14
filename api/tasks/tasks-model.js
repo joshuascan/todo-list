@@ -44,6 +44,13 @@ async function removeTask(task_id) {
   return removedTask;
 }
 
+async function clearCompleted(user_id) {
+  const clearedTasks = await db("tasks")
+    .del(["name", "task_id"])
+    .where({ user_id: user_id, completed: true });
+  return clearedTasks;
+}
+
 function findAllArchivedTasks(user_id) {
   return db("archived").where("user_id", user_id);
 }
@@ -72,6 +79,7 @@ module.exports = {
   addTask,
   updateTask,
   removeTask,
+  clearCompleted,
   findAllArchivedTasks,
   addToArchive,
   clearArchive,
