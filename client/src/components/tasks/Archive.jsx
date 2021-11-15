@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
   fetchArchived,
@@ -9,6 +9,7 @@ import {
 import ArchivedTask from "./ArchivedTask";
 
 const Archive = () => {
+  const [selectedForMoveById, setSelectedForMoveById] = useState([]);
   const archived = useSelector((state) => state.todo.archived);
   const dispatch = useDispatch();
 
@@ -36,7 +37,12 @@ const Archive = () => {
       {archived.length > 0 ? (
         <div>
           {archived.map((task) => (
-            <ArchivedTask key={task.task_id} task={task} />
+            <ArchivedTask
+              key={task.task_id}
+              task={task}
+              selectedForMoveById={selectedForMoveById}
+              setSelectedForMoveById={setSelectedForMoveById}
+            />
           ))}
 
           <div>
