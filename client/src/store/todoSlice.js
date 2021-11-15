@@ -63,7 +63,7 @@ export const todoSlice = createSlice({
         }
       });
     },
-    clearArchive: (todo) => {
+    archivedDeleted: (todo) => {
       todo.archived = [];
     },
   },
@@ -140,6 +140,14 @@ export const archiveCompleted = () => (dispatch) => {
     });
 };
 
+export const deleteArchived = () => (dispatch) => {
+  axiosWithAuth()
+    .delete("/api/tasks/archived")
+    .then(() => {
+      dispatch(archivedDeleted());
+    });
+};
+
 export const {
   tasksFetched,
   taskAdded,
@@ -152,7 +160,7 @@ export const {
   selectForMove,
   moveToTasks,
   moveToCompleted,
-  clearArchive,
+  archivedDeleted,
 } = todoSlice.actions;
 
 export default todoSlice.reducer;

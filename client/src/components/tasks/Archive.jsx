@@ -4,7 +4,7 @@ import {
   fetchArchived,
   moveToTasks,
   moveToCompleted,
-  clearArchive,
+  deleteArchived,
 } from "../../store/todoSlice";
 import ArchivedTask from "./ArchivedTask";
 
@@ -27,7 +27,7 @@ const Archive = () => {
   };
 
   const handleClearArchive = () => {
-    dispatch(clearArchive());
+    dispatch(deleteArchived());
   };
 
   return (
