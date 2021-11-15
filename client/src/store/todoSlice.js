@@ -37,11 +37,6 @@ export const todoSlice = createSlice({
     toggleArchived: (todo) => {
       todo.showArchived = !todo.showArchived;
     },
-    selectForMove: (todo, action) => {
-      todo.archived = todo.archived.map((task) => {
-        return task.id === action.payload.id ? action.payload : task;
-      });
-    },
     moveToTasks: (todo) => {
       todo.archived.forEach((todo) => {
         if (todo.moveFromArchive === true) {
@@ -63,8 +58,13 @@ export const todoSlice = createSlice({
         }
       });
     },
-    archivedDeleted: (todo) => {
-      todo.archived = [];
+    archivedDeleted: (todo, action) => {
+      const deletedIds = action.payload.map((task) => {
+        return task.task_id;
+      });
+      todo.archived = todo.archived.filter(
+        (task) => deletedIds.includes(task.task_id) === false
+      );
     },
   },
 });
@@ -122,11 +122,11 @@ export const archiveCompleted = () => (dispatch) => {
     });
 };
 
-export const deleteArchived = () => (dispatch) => {
+export const deleteFromArchived = (tasks) => (dispatch) => {
   axiosWithAuth()
-    .delete("/api/tasks/archived")
-    .then(() => {
-      dispatch(archivedDeleted());
+    .delete("/api/tasks/archived", { data: tasks })
+    .then((res) => {
+      dispatch(archivedDeleted(res.data));
     });
 };
 
@@ -139,7 +139,6 @@ export const {
   completedCleared,
   completedArchived,
   toggleArchived,
-  selectForMove,
   moveToTasks,
   moveToCompleted,
   archivedDeleted,

@@ -66,10 +66,11 @@ async function addToArchive(tasks) {
   return newTasks;
 }
 
-async function clearArchive(user_id) {
+async function deleteFromArchive(user_id, taskIds) {
   const deletedTasks = await db("archived")
     .del(["name", "task_id"])
-    .where("user_id", user_id);
+    .whereIn("task_id", taskIds)
+    .andWhere("user_id", user_id);
   return deletedTasks;
 }
 
@@ -82,5 +83,5 @@ module.exports = {
   clearCompleted,
   findAllArchivedTasks,
   addToArchive,
-  clearArchive,
+  deleteFromArchive,
 };

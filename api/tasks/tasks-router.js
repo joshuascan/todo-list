@@ -25,7 +25,10 @@ router.post("/archived", (req, res, next) => {
 });
 
 router.delete("/archived", (req, res, next) => {
-  Tasks.clearArchive(req.decodedToken.subject)
+  const taskIds = req.body.map((task) => {
+    return task.task_id;
+  });
+  Tasks.deleteFromArchive(req.decodedToken.subject, taskIds)
     .then((tasks) => {
       res.status(200).json(tasks);
     })

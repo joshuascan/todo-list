@@ -7,12 +7,12 @@ const ArchivedTask = ({
 }) => {
   const handleSelectForMove = (e) => {
     if (e.target.checked === true) {
-      setSelectedForMoveById([...selectedForMoveById, task.task_id]);
+      setSelectedForMoveById([...selectedForMoveById, task]);
     } else {
-      const filteredIds = selectedForMoveById.filter(
-        (id) => id !== task.task_id
+      const filteredTasks = selectedForMoveById.filter(
+        (t) => t.task_id !== task.task_id
       );
-      setSelectedForMoveById(filteredIds);
+      setSelectedForMoveById(filteredTasks);
     }
   };
 
