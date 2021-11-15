@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
+  fetchArchived,
   moveToTasks,
   moveToCompleted,
   clearArchive,
@@ -10,6 +11,10 @@ import ArchivedTask from "./ArchivedTask";
 const Archive = () => {
   const archived = useSelector((state) => state.todo.archived);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchArchived());
+  }, [dispatch]);
 
   const handleMoveToTasks = (e) => {
     e.preventDefault();
@@ -31,7 +36,7 @@ const Archive = () => {
       {archived.length > 0 ? (
         <div>
           {archived.map((task) => (
-            <ArchivedTask key={task.id} task={task} />
+            <ArchivedTask key={task.task_id} task={task} />
           ))}
 
           <div>
