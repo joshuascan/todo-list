@@ -46,7 +46,7 @@ async function removeTask(task_id) {
 
 async function clearCompleted(user_id) {
   const clearedTasks = await db("tasks")
-    .del(["name", "task_id"])
+    .del(["name", "task_id", "completed"])
     .where({ user_id: user_id, completed: true });
   return clearedTasks;
 }

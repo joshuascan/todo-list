@@ -43,6 +43,14 @@ router.delete("/:task_id", (req, res, next) => {
     .catch(next);
 });
 
+router.delete("/", (req, res, next) => {
+  Tasks.clearCompleted(req.decodedToken.subject)
+    .then((tasks) => {
+      res.status(200).json(tasks);
+    })
+    .catch(next);
+});
+
 // ARCHIVE ENDPOINTS
 
 router.get("/archived", (req, res, next) => {
