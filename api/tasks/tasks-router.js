@@ -62,7 +62,7 @@ router.get("/archived", (req, res, next) => {
 });
 
 router.post("/archived", (req, res, next) => {
-  Tasks.addToArchive(req.body)
+  Tasks.addToArchive(req.decodedToken.subject, req.body)
     .then((task) => {
       res.status(201).json(task);
     })

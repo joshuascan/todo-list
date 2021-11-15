@@ -55,8 +55,11 @@ function findAllArchivedTasks(user_id) {
   return db("archived").where("user_id", user_id);
 }
 
-async function addToArchive(tasks) {
-  const newTasks = await db("archived").insert(tasks, [
+async function addToArchive(user_id, tasks) {
+  const archivedTasks = tasks.map((task) => {
+    task.user_id = user_id;
+  });
+  const newTasks = await db("archived").insert(archivedTasks, [
     "user_id",
     "task_id",
     "name",

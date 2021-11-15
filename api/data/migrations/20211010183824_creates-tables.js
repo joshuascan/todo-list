@@ -22,7 +22,7 @@ exports.up = async (knex) => {
     .createTable("archived", (archived) => {
       archived.increments("task_id");
       archived.string("name", 30).notNullable();
-      archived.boolean("completed").defaultTo(false);
+      archived.boolean("completed").defaultTo(true);
       archived.boolean("moveFromArchive").defaultTo(false);
       archived
         .integer("user_id")
