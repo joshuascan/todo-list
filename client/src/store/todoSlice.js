@@ -74,9 +74,6 @@ export const fetchTasks = () => (dispatch) => {
     .get("/api/tasks")
     .then((res) => {
       dispatch(tasksFetched(res.data));
-    })
-    .catch((err) => {
-      console.log(err);
     });
 };
 
@@ -85,9 +82,6 @@ export const addTask = (newTask) => (dispatch) => {
     .post("/api/tasks", newTask)
     .then((res) => {
       dispatch(taskAdded(res.data));
-    })
-    .catch((err) => {
-      console.log(err);
     });
 };
 
@@ -96,9 +90,6 @@ export const editTask = (id, editedTask) => (dispatch) => {
     .put(`/api/tasks/${id}`, editedTask)
     .then((res) => {
       dispatch(taskEdited(res.data));
-    })
-    .catch((err) => {
-      console.log(err);
     });
 };
 
@@ -107,9 +98,6 @@ export const deleteTask = (id) => (dispatch) => {
     .delete(`/api/tasks/${id}`)
     .then((res) => {
       dispatch(taskDeleted(res.data));
-    })
-    .catch((err) => {
-      console.log(err);
     });
 };
 
@@ -118,9 +106,6 @@ export const fetchArchived = () => (dispatch) => {
     .get("/api/tasks/archived")
     .then((res) => {
       dispatch(archivedFetched(res.data));
-    })
-    .catch((err) => {
-      console.log(err);
     });
 };
 
@@ -134,9 +119,6 @@ export const archiveCompleted = () => (dispatch) => {
         .then((res) => {
           dispatch(completedArchived(res.data));
         });
-    })
-    .catch((err) => {
-      console.log(err);
     });
 };
 
