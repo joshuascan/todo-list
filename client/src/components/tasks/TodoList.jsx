@@ -1,15 +1,17 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { archiveCompleted, toggleArchived } from "../../store/todoSlice";
-import { fetchTasks } from "../../store/todoSlice";
+import {
+  fetchTasks,
+  archiveCompleted,
+  toggleArchived,
+} from "../../store/todoSlice";
 import Task from "./Task";
 import TodoForm from "./TodoForm";
 import Archive from "./Archive";
 import Navigation from "../Navigation";
 
 const TodoList = () => {
-  const { tasks } = useSelector((state) => state.todo);
-  const showArchived = useSelector((state) => state.todo.showArchived);
+  const { tasks, showArchived } = useSelector((state) => state.todo);
   const dispatch = useDispatch();
 
   useEffect(() => {

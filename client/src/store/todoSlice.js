@@ -120,12 +120,16 @@ export const archiveCompleted = () => (dispatch) => {
   axiosWithAuth()
     .delete("/api/tasks")
     .then((res) => {
+      console.log(res.data);
       dispatch(completedCleared());
       axiosWithAuth()
         .post("/api/tasks/archived", res.data)
         .then((res) => {
           dispatch(completedArchived(res.data));
         });
+    })
+    .catch((err) => {
+      console.log(err);
     });
 };
 
