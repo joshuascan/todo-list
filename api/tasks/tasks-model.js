@@ -11,15 +11,18 @@ function findById(user_id, task_id) {
     .first();
 }
 
-async function addTask(user_id, task) {
-  const [newTask] = await db("tasks").insert(
-    {
-      user_id: user_id,
-      name: task.name,
-    },
-    ["user_id", "task_id", "name", "completed", "moveFromArchive"]
-  );
-  return newTask;
+async function addTasks(tasks) {
+  const newTask = await db("tasks").insert(tasks, [
+    "user_id",
+    "task_id",
+    "name",
+    "completed",
+    "moveFromArchive",
+  ]);
+  if (newTask.length === 1) {
+    const [singleTask] = newTask;
+    return singleTask;
+  } else return newTask;
 }
 
 async function updateTask(user_id, task_id, task) {
@@ -68,7 +71,7 @@ async function addToArchive(tasks) {
 
 async function deleteFromArchive(user_id, taskIds) {
   const deletedTasks = await db("archived")
-    .del(["name", "task_id"])
+    .del(["name", "task_id", "completed"])
     .whereIn("task_id", taskIds)
     .andWhere("user_id", user_id);
   return deletedTasks;
@@ -77,7 +80,7 @@ async function deleteFromArchive(user_id, taskIds) {
 module.exports = {
   findAllTasks,
   findById,
-  addTask,
+  addTasks,
   updateTask,
   removeTask,
   clearCompleted,

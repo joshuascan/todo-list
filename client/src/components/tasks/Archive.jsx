@@ -9,7 +9,7 @@ import {
 import ArchivedTask from "./ArchivedTask";
 
 const Archive = () => {
-  const [selectedForMoveById, setSelectedForMoveById] = useState([]);
+  const [selectedForMove, setSelectedForMove] = useState([]);
   const archived = useSelector((state) => state.todo.archived);
   const dispatch = useDispatch();
 
@@ -19,7 +19,8 @@ const Archive = () => {
 
   const handleMoveToTasks = (e) => {
     e.preventDefault();
-    dispatch(moveToTasks());
+    // dispatch(moveToTasks());
+    console.log(selectedForMove);
   };
 
   const handleMoveToCompleted = (e) => {
@@ -40,8 +41,8 @@ const Archive = () => {
             <ArchivedTask
               key={task.task_id}
               task={task}
-              selectedForMoveById={selectedForMoveById}
-              setSelectedForMoveById={setSelectedForMoveById}
+              selectedForMove={selectedForMove}
+              setSelectedForMove={setSelectedForMove}
             />
           ))}
 

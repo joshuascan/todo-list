@@ -54,7 +54,14 @@ router.get("/:task_id", (req, res, next) => {
 });
 
 router.post("/", (req, res, next) => {
-  Tasks.addTask(req.decodedToken.subject, req.body)
+  let newTasks = req.body;
+  if (req.body.length > 1) {
+    newTasks = newTasks.map((task) => ({
+      ...task,
+      user_id: req.decodedToken.subject,
+    }));
+  } else newTasks.user_id = req.decodedToken.subject;
+  Tasks.addTasks(newTasks)
     .then((task) => {
       res.status(201).json(task);
     })

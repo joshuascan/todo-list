@@ -1,18 +1,14 @@
 import React from "react";
 
-const ArchivedTask = ({
-  task,
-  selectedForMoveById,
-  setSelectedForMoveById,
-}) => {
+const ArchivedTask = ({ task, selectedForMove, setSelectedForMove }) => {
   const handleSelectForMove = (e) => {
     if (e.target.checked === true) {
-      setSelectedForMoveById([...selectedForMoveById, task]);
+      setSelectedForMove([...selectedForMove, task]);
     } else {
-      const filteredTasks = selectedForMoveById.filter(
+      const filteredTasks = selectedForMove.filter(
         (t) => t.task_id !== task.task_id
       );
-      setSelectedForMoveById(filteredTasks);
+      setSelectedForMove(filteredTasks);
     }
   };
 
