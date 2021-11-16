@@ -1,11 +1,11 @@
 const db = require("../data/db-config");
 
 function findAllNotes(user_id) {
-  return db("tasks").where("user_id", user_id);
+  return db("notes").where("user_id", user_id);
 }
 
 async function addNote(note) {
-  const [newNote] = await db("tasks").insert(note, [
+  const [newNote] = await db("notes").insert(note, [
     "note_id",
     "title",
     "body",
