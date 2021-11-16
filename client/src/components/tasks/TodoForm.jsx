@@ -19,7 +19,7 @@ const TodoForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(addTask({ ...newTask, id: Date.now() }));
+    dispatch(addTask(newTask));
     setNewTask(initialFormValues);
   };
 

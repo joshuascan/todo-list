@@ -2,13 +2,12 @@ import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
   fetchArchived,
-  moveToTasks,
-  moveToCompleted,
+  addTask,
   deleteFromArchived,
 } from "../../store/todoSlice";
 import ArchivedTask from "./ArchivedTask";
 
-const Archive = () => {
+const Archive = ({ setMoveFromArchive }) => {
   const [selectedForMove, setSelectedForMove] = useState([]);
   const archived = useSelector((state) => state.todo.archived);
   const dispatch = useDispatch();
@@ -19,13 +18,20 @@ const Archive = () => {
 
   const handleMoveToTasks = (e) => {
     e.preventDefault();
-    // dispatch(moveToTasks());
-    console.log(selectedForMove);
+    const incomplete = selectedForMove.map((task) => ({
+      ...task,
+      completed: false,
+    }));
+    dispatch(addTask(incomplete));
+    dispatch(deleteFromArchived(selectedForMove));
+    setMoveFromArchive(true);
   };
 
   const handleMoveToCompleted = (e) => {
     e.preventDefault();
-    dispatch(moveToCompleted());
+    dispatch(addTask(selectedForMove));
+    dispatch(deleteFromArchived(selectedForMove));
+    setMoveFromArchive(true);
   };
 
   const handleClearArchive = () => {

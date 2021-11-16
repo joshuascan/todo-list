@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
   fetchTasks,
@@ -11,12 +11,14 @@ import Archive from "./Archive";
 import Navigation from "../Navigation";
 
 const TodoList = () => {
+  const [movedFromArchive, setMoveFromArchive] = useState(false);
   const { tasks, showArchived } = useSelector((state) => state.todo);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(fetchTasks());
-  }, [dispatch]);
+    setMoveFromArchive(false);
+  }, [dispatch, movedFromArchive]);
 
   const handleArchiveCompleted = () => {
     dispatch(archiveCompleted());
@@ -57,7 +59,7 @@ const TodoList = () => {
           </div>
         </div>
       ) : (
-        <Archive />
+        <Archive setMoveFromArchive={setMoveFromArchive} />
       )}
       <button onClick={handleToggleArchived}>
         {showArchived ? "Hide Archived" : "Show Archived"}
