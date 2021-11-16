@@ -8,6 +8,7 @@ const server = express();
 
 const tasksRouter = require("./tasks/tasks-router");
 const authRouter = require("./auth/auth-router");
+const notesRouter = require("./notes/notes-router");
 
 server.use(express.json());
 server.use(helmet());
@@ -15,6 +16,7 @@ server.use(cors());
 
 server.use("/api/auth", authRouter);
 server.use("/api/tasks", restricted, tasksRouter);
+server.use("/api/notes", restricted, notesRouter);
 
 server.get("/", (req, res) => {
   res.status(200).json({ message: "API is up" });
