@@ -29,14 +29,13 @@ async function updateTask(user_id, task_id, task) {
   const [updatedTask] = await db("tasks")
     .update(
       {
-        user_id: user_id,
         name: task.name,
         completed: task.completed,
         moveFromArchive: task.moveFromArchive,
       },
-      ["user_id", "task_id", "name", "completed", "moveFromArchive"]
+      ["task_id", "name", "completed", "moveFromArchive"]
     )
-    .where("task_id", task_id);
+    .where({ user_id: user_id, task_id: task_id });
   return updatedTask;
 }
 

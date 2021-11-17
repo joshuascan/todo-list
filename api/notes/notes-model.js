@@ -15,14 +15,8 @@ async function addNote(note) {
 
 async function updateNote(user_id, note_id, note) {
   const [updatedNote] = await db("notes")
-    .update(
-      {
-        ...note,
-        user_id: user_id,
-      },
-      ["note_id", "title", "body"]
-    )
-    .where("note_id", note_id);
+    .update(note, ["note_id", "title", "body"])
+    .where({ user_id: user_id, note_id: note_id });
   return updatedNote;
 }
 

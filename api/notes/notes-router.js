@@ -18,4 +18,12 @@ router.post("/", (req, res, next) => {
     .catch(next);
 });
 
+router.put("/:note_id", (req, res, next) => {
+  Notes.updateNote(req.decodedToken.subject, req.params.note_id, req.body)
+    .then((note) => {
+      res.status(200).json(note);
+    })
+    .catch(next);
+});
+
 module.exports = router;
