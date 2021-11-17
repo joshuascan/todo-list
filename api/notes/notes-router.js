@@ -26,4 +26,12 @@ router.put("/:note_id", (req, res, next) => {
     .catch(next);
 });
 
+router.delete("/:note_id", (req, res, next) => {
+  Notes.removeNote(req.params.note_id)
+    .then((note) => {
+      res.status(200).json(note);
+    })
+    .catch(next);
+});
+
 module.exports = router;
